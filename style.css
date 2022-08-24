@@ -1,0 +1,16 @@
+.game-board{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    width: 500px;
+    height: 500px;
+    border: 1px solid black;
+}
+
+.game-board .play-box{
+    border: 1px solid red;
+    font-size: 600%;
+    text-align: center;
+    padding: 15%;
+    user-select: none;    
+}
