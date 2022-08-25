@@ -1,69 +1,101 @@
-class Player {
-    constructor(value){
-        this.value = value;
+//Declarations of game variables.
+class GameVariables {
+    constructor(){
+        this.player = 'X';
+        this.board = ["","","","","","","","",""];
+        this.winConditions = [[0, 1, 2],[3, 4, 5],[6, 7, 8],[0, 3, 6],[1, 4, 7],[2, 5, 8],[0, 4, 8],[2, 4, 6]];
+        this.endGameFlag = false;
+        this.turnNumber = 0;
+        this.gameText = document.querySelector(".game-text");
+        this.playBoxes = document.querySelectorAll(".play-box");
+        this.restartButton = document.getElementById("restart-button");
     }
 }
 
-let player = new Player('X');
-let board = ["","","","","","","","",""];
-const winConditions = [[0, 1, 2],[3, 4, 5],[6, 7, 8],[0, 3, 6],[1, 4, 7],[2, 5, 8],[0, 4, 8],[2, 4, 6]];
-endGameFlag = false;
-
+//Creating event listeners for game table.
 function InputManager(){
-    const playBoxes = document.querySelectorAll(".play-box");
-    //console.log(playBoxes);
-    playBoxes.forEach((element) => {
+    Game.playBoxes.forEach((element) => {
         element.addEventListener("click", (box) => {
-            EventHandler(box, "INPUT");
+            EventHandler(box, "PLAY");
         })
     })
+
+    Game.restartButton.addEventListener("click", (button) => {
+        EventHandler(button, "RESTART");
+    });
 }
 
+//Initiations of variables.
+let Game = new GameVariables();
+InputManager();
 
+
+//Event Handler for the game.
 function EventHandler(inputElement, eventType){
-    if(eventType == "INPUT" && !endGameFlag){
-        const boxIndex = inputElement.target.dataset.index;
-        //console.log(inputElement.target.dataset.index);
-        if(board[boxIndex] == ""){
-            board[boxIndex] = player.value;
-            UpdateBoard(inputElement, false);
-            console.log("Winner Check", WinnerCheck())
-            if(WinnerCheck()){
-                console.log("Winner is " + player.value);
-                endGameFlag = true;
-            }
-            player.value = player.value == "O" ? "X" : "O";
-
-        }
+    if(eventType == "PLAY" && !Game.endGameFlag){
+        GameManager(inputElement);
     }
+    if(eventType == "RESTART")
+        RestartGame();
 }
 
+//Updates the board after a event.
 function UpdateBoard(displayElement, restartFlag){
-    //console.log(displayElement);
     if(restartFlag){
-
+        Game.playBoxes.forEach((element) => {
+            element.innerHTML = "";
+            Game.gameText.innerHTML = "X's turn";
+        })
     }
     else{
-        board[displayElement.target.dataset.index] = player.value;
-        displayElement.target.innerHTML = player.value;
+        displayElement.target.innerHTML = Game.player;
+        Game.gameText.innerHTML = Game.player == 'X' ?  "O's turn" : "X's turn";
     }
 }
 
-
+//Checks for if there is a winner.
 function WinnerCheck(){
     let check = false
-    winConditions.forEach(element => {
-        if(board[element[0]] == player.value && board[element[1]] == player.value && board[element[2]] == player.value){
+    Game.winConditions.forEach(element => {
+        if(Game.board[element[0]] == Game.player && Game.board[element[1]] == Game.player && Game.board[element[2]] == Game.player){
             check = true;
         }
     });
     return check;
 }
 
-
-function GameManager(){
-    InputManager();                                      
-    console.log("Initiated");
+//Handles the game logic.
+function GameManager(inputElement){
+    const boxIndex = inputElement.target.dataset.index;
+        
+    if(Game.board[boxIndex] == ""){
+        Game.board[boxIndex] = Game.player;
+        UpdateBoard(inputElement, false);
+            
+        if(WinnerCheck()){
+            console.log("Winner is " + Game.player);
+            Game.gameText.innerHTML = "Winner is " + Game.player;
+            Game.endGameFlag = true;
+        }
+            
+        Game.player = Game.player == 'O' ? 'X' : 'O';
+        Game.turnNumber += 1;
+        
+        if(Game.turnNumber == 9){
+            Game.gameText.innerHTML = "Game is draw!";
+            Game.endGameFlag = true;
+        }
+    }
 }
 
-GameManager();
+//Restarts the game.
+function RestartGame(){
+    console.log("Restart");
+    Game.player = 'X';
+    Game.board = ["","","","","","","","",""];
+    Game.endGameFlag = false;
+    Game.turnNumber = 0;
+
+    UpdateBoard(null, true);
+}
+
