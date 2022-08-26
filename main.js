@@ -44,12 +44,12 @@ function UpdateBoard(displayElement, restartFlag){
     if(restartFlag){
         Game.playBoxes.forEach((element) => {
             element.innerHTML = "";
-            Game.gameText.innerHTML = "X's turn";
+            Game.gameText.innerHTML = "X'S TURN";
         })
     }
     else{
         displayElement.target.innerHTML = Game.player;
-        Game.gameText.innerHTML = Game.player == 'X' ?  "O's turn" : "X's turn";
+        Game.gameText.innerHTML = Game.player == 'X' ?  "O'S TURN" : "X'S TURN";
     }
 }
 
@@ -73,18 +73,20 @@ function GameManager(inputElement){
         UpdateBoard(inputElement, false);
             
         if(WinnerCheck()){
-            console.log("Winner is " + Game.player);
-            Game.gameText.innerHTML = "Winner is " + Game.player;
+            console.log("WINNER IS " + Game.player);
+            Game.gameText.innerHTML = "WINNER IS " + Game.player;
             Game.endGameFlag = true;
+        }
+        else{
+            if(Game.turnNumber == 8){
+                Game.gameText.innerHTML = "GAME IS A DRAW!";
+                Game.endGameFlag = true;
+            }
         }
             
         Game.player = Game.player == 'O' ? 'X' : 'O';
         Game.turnNumber += 1;
         
-        if(Game.turnNumber == 9){
-            Game.gameText.innerHTML = "Game is draw!";
-            Game.endGameFlag = true;
-        }
     }
 }
 
