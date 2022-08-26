@@ -36,10 +36,8 @@ body{
     display: flex;
     justify-content: center;
     align-items: start;
-    border-radius: 1rem;
     color: var(--font-color);
-    font-size: 200%;
-    
+    font-size: min(5vw, 200%);
 }
 
 .game-container{
@@ -47,6 +45,7 @@ body{
     flex-direction: column;
     align-items: center;
     background-color: var(--game-container-color);
+    max-width: 100%;
 }
 
 #restart-button{
@@ -69,7 +68,7 @@ body{
 }
 
 .game-text{
-    font-size: 2.5rem;
+    font-size: min(2.5rem,6vw);
 }
 
 .game-board{
@@ -77,14 +76,14 @@ body{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    width: 500px;
-    height: 500px;
+    width: min(500px, 90vw);
+    height: min(500px, 90vw);
     border: 2px solid var(--board-border-color);
     background-color: var(--board-background-color);
 }
 
 .game-board .play-box{
-    font-size: 600%;
+    font-size: min(600%,16vw);
     text-align: center;
     padding: 15%;
     user-select: none;
