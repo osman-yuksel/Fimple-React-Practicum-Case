@@ -58,6 +58,9 @@ function WinnerCheck(){
     let check = false
     Game.winConditions.forEach(element => {
         if(Game.board[element[0]] == Game.player && Game.board[element[1]] == Game.player && Game.board[element[2]] == Game.player){
+            Game.playBoxes[element[0]].classList.add("win-box");
+            Game.playBoxes[element[1]].classList.add("win-box");
+            Game.playBoxes[element[2]].classList.add("win-box");
             check = true;
         }
     });
@@ -97,6 +100,9 @@ function RestartGame(){
     Game.board = ["","","","","","","","",""];
     Game.endGameFlag = false;
     Game.turnNumber = 0;
+    Game.playBoxes.forEach(element => {
+        element.className = "play-box"
+    })
 
     UpdateBoard(null, true);
 }

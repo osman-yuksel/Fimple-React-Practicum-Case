@@ -15,6 +15,7 @@
     --play-box-border-color: #000000;
     --play-box-background-color: #ccf4f7;
     --play-box-border-radius: 22px;
+    --win-box-background: rgb(117, 248, 117);
 
     --button-font-color: #000000;
     --button-font-hover-color: #f73a3a;
@@ -38,6 +39,7 @@ body{
     align-items: start;
     color: var(--font-color);
     font-size: min(5vw, 200%);
+    text-decoration: underline;
 }
 
 .game-container{
@@ -59,12 +61,7 @@ body{
     transform: scale(1);
     transition: transform 0.1s ease-in-out;
 }
-#restart-button:hover{
-    background-color: var(--button-hover-background);
-    transform: scale(1.2);
-    transition: transform 0.1s ease-in-out;
-    color: var(--button-font-hover-color);
-}
+
 
 .game-text{
     font-size: min(2.5rem,6vw);
@@ -88,8 +85,8 @@ body{
     user-select: none;
 }
 
-.game-board .play-box:hover{
-    background-color: var(--play-box-background-color);
+.game-board .win-box{
+    background-color: var(--win-box-background);
 }
 
 .play-box:nth-child(-n+3){
@@ -115,4 +112,30 @@ body{
 }
 .play-box:nth-child(9){
     border-bottom-right-radius: var(--play-box-border-radius);
+}
+
+@media only screen and (min-width: 800px) {
+    #restart-button:hover{
+        background-color: var(--button-hover-background);
+        transform: scale(1.2);
+        transition: transform 0.1s ease-in-out;
+        color: var(--button-font-hover-color);
+    }
+    .game-board .play-box:hover{
+        background-color: var(--play-box-background-color);
+    }
+    
+}
+
+@media only screen and (max-width: 800px) {
+    #restart-button:active{
+        background-color: var(--button-hover-background);
+        transform: scale(1.2);
+        transition: transform 0.1s ease-in-out;
+        color: var(--button-font-hover-color);
+    }
+    .game-board .play-box:active{
+        background-color: var(--play-box-background-color);
+    }
+    
 }
