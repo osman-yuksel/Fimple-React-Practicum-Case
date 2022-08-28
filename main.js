@@ -9,6 +9,10 @@ class GameVariables {
         this.gameText = document.querySelector(".game-text");
         this.playBoxes = document.querySelectorAll(".play-box");
         this.restartButton = document.getElementById("restart-button");
+        this.XScore = document.querySelector(".x-win");
+        this.OScore = document.querySelector(".o-win");
+        this.XWin = 0;
+        this.OWin = 0;
     }
 }
 
@@ -61,6 +65,7 @@ function WinnerCheck(){
             Game.playBoxes[element[0]].classList.add("win-box");
             Game.playBoxes[element[1]].classList.add("win-box");
             Game.playBoxes[element[2]].classList.add("win-box");
+            Game.restartButton.innerHTML = "PLAY AGAIN";
             check = true;
         }
     });
@@ -76,14 +81,19 @@ function GameManager(inputElement){
         UpdateBoard(inputElement, false);
             
         if(WinnerCheck()){
-            console.log("WINNER IS " + Game.player);
-            Game.gameText.innerHTML = "WINNER IS " + Game.player;
+            console.log("WINNER IS " + Game.player + "!");
+            Game.gameText.innerHTML = "WINNER IS " + Game.player + "!";
             Game.endGameFlag = true;
+            if(Game.player == "X") Game.XWin += 1; 
+            else Game.OWin += 1;
+            Game.XScore.innerHTML = "X: " + Game.XWin.toString();
+            Game.OScore.innerHTML = "O: " + Game.OWin.toString();
         }
         else{
             if(Game.turnNumber == 8){
                 Game.gameText.innerHTML = "GAME IS A DRAW!";
                 Game.endGameFlag = true;
+                Game.restartButton.innerHTML = "PLAY AGAIN";
             }
         }
             
@@ -101,8 +111,9 @@ function RestartGame(){
     Game.endGameFlag = false;
     Game.turnNumber = 0;
     Game.playBoxes.forEach(element => {
-        element.className = "play-box"
+        element.className = "play-box";
     })
+    Game.restartButton.innerHTML = "RESTART";
 
     UpdateBoard(null, true);
 }
